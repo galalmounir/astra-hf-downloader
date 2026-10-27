@@ -6,6 +6,7 @@ filename. Used to install models that are not in the Manager DB.
 """
 import os
 import tempfile
+import time
 import urllib.request
 
 MODEL_SUBDIRS = (
@@ -80,17 +81,37 @@ class DownloadToModels:
         )
         tmp_path = None
         try:
+            from comfy.utils import ProgressBar
+            pb = None
             with urllib.request.urlopen(req, timeout=14400) as resp, \
                     tempfile.NamedTemporaryFile(
                         dir=target_dir, delete=False, suffix=".part"
                     ) as tmp:
+                try:
+                    expected = int(resp.headers.get("Content-Length") or 0)
+                except (TypeError, ValueError):
+                    expected = 0
+                if expected > 0:
+                    pb = ProgressBar(expected)
                 total = 0
+                last_report = 0.0
                 while True:
-                    chunk = resp.read(1 << 21)
+                    chunk = resp.read(1 << 22)
                     if not chunk:
                         break
                     tmp.write(chunk)
                     total += len(chunk)
+                    if pb is not None:
+                        pb.update_absolute(min(total, expected))
+                    else:
+                        now = time.monotonic()
+                        if now - last_report >= 2.0:
+                            print(
+                                f"[astra-hf-downloader] {name}: {total} bytes"
+                                f" (Content-Length unknown)",
+                                flush=True,
+                            )
+                            last_report = now
                 tmp_path = tmp.name
             os.replace(tmp_path, out_path)
             tmp_path = None
