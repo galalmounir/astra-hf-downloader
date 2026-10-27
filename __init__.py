@@ -11,6 +11,7 @@ import urllib.request
 MODEL_SUBDIRS = (
     "checkpoints", "diffusion_models", "text_encoders", "vae", "loras",
     "controlnet", "upscale_models", "embeddings", "clip_vision",
+    "vae_approx", "clip", "audio_encoders", "style_models",
 )
 
 ALLOWED_HOST_SUFFIXES = (
