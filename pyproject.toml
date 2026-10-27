@@ -1,0 +1,11 @@
+[project]
+name = "astra-hf-downloader"
+version = "0.1.0"
+description = "Minimal ComfyUI node that downloads model files from Hugging Face into Comfy model directories at execution time."
+license = {text = "MIT"}
+dependencies = []
+
+[tool.comfy]
+PublisherId = "galalmounir"
+DisplayName = "Astra HF Downloader"
+Icon = ""
