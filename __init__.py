@@ -32,7 +32,7 @@ def _models_root() -> str:
 
 
 class DownloadToModels:
-    CATEGORY = "astra"
+    CATEGORY = "Constellation"
     FUNCTION = "run"
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("filename",)
@@ -107,7 +107,7 @@ class DownloadToModels:
 
 
 NODE_CLASS_MAPPINGS = {"DownloadToModels": DownloadToModels}
-NODE_DISPLAY_NAME_MAPPINGS = {"DownloadToModels": "Download To Models (Astra)"}
+NODE_DISPLAY_NAME_MAPPINGS = {"DownloadToModels": "Model Downloader"}
 # Historical ComfyUI attribute spelling (kept for older cores):
 NODE_CLASS_MAPPES = NODE_CLASS_MAPPINGS
 WEB_DIRECTORY = "./web"
